@@ -90,9 +90,15 @@ class pyroSolver:
         self.ymax = ymax  # maximum y-coordinate
         self.output_dir = output_dir  # directory to save output files
 
-        # Initialize default boundary conditions
+        # Initialize boundary conditions with sensible defaults and merge user input
         default_bc = {"xl": "outflow", "xr": "outflow", "yl": "outflow", "yr": "outflow"}
-        self.bc = {} if bc is None else dict(bc)
+        if bc is None:
+            # No user-specified BCs; start from the defaults
+            self.bc = default_bc.copy()
+        else:
+            # Merge user BCs with defaults so unspecified directions fall back to "outflow"
+            self.bc = default_bc.copy()
+            self.bc.update(bc)
 
         # Initialize piston parameters
         if piston is None:
