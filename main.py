@@ -665,7 +665,7 @@ def main():
         bc={"xl": "piston", "xr": "outflow", "yl": "periodic", "yr": "periodic"},  # boundary conditions
         piston={'Initial Smoothing': 0,  # 0: no smoothing, 1: tanh smoothing
                 'Initial Bin Size': 12,},
-        output_dir='Oscillating-Piston-Data-Animation-Frames'  # directory to save output files
+        output_dir='Constant-Velocity-Piston-Figures'  # directory to save output files
     )
 
     simulation.setup(piston_mode="inflow")
