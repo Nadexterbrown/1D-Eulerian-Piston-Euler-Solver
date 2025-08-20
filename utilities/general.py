@@ -110,7 +110,7 @@ def plot_single(x, y, label=None, title=None, xlabel=None, ylabel=None, legend=T
         plt.show()
     plt.close()
 
-def plot_multiple(x, y_list, labels=None, title=None, xlabel=None, ylabel=None, legend=True, colors=None,
+def plot_multiple(x, y_list, labels=None, title=None, xlabel=None, ylabel=None, legend=True, x_limits=None, colors=None,
                   linetypes=None, output=None):
     """
     Plots multiple lines on the same graph.
@@ -135,6 +135,9 @@ def plot_multiple(x, y_list, labels=None, title=None, xlabel=None, ylabel=None, 
         plt.plot(x, y, label=label,
                  color=colors[i] if colors else None,
                  linestyle=linetypes[i] if linetypes else '-')
+
+    if x_limits:
+        plt.xlim(x_limits)
 
     if title:
         plt.title(title)
@@ -204,8 +207,12 @@ def generate_animation(source_dir, output_dir):
     - output_dir: Path to save the generated animation (e.g., 'output.gif').
     """
     # Extract numeric parts of filenames for sorting
-    def extract_frame_number(filename):
-        match = re.search(r'plt(\d+)', filename)
+    def extract_frame_number(filename: str) -> int:
+        """
+        Extract the integer frame number from filenames like 'Frame-1234.png'.
+        Returns -1 if no match is found.
+        """
+        match = re.search(r'Frame-(\d+)', filename)
         return int(match.group(1)) if match else -1
 
     # Filter and sort files by frame number
